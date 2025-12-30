@@ -1,0 +1,41 @@
+version: "3.8"
+
+services:
+  zookeeper:
+    image: wurstmeister/zookeeper:latest
+    container_name: kafka-chat-zookeeper
+    restart: unless-stopped
+    hostname: zookeeper
+    networks:
+      - kafka-chat-network
+    ports:
+      - "2181:2181"
+    volumes:
+      - zookeeper_data:/opt/zookeeper-3.4.13/data
+
+  kafka:
+    image: wurstmeister/kafka:latest
+    container_name: kafka-chat-kafka
+    hostname: kafka
+    networks:
+      - kafka-chat-network
+    depends_on:
+      - zookeeper
+    restart: unless-stopped
+    environment:
+      - KAFKA_ZOOKEEPER_CONNECT=zookeeper:2181
+      - KAFKA_ADVERTISED_LISTENERS=PLAINTEXT://localhost:9092
+      - KAFKA_LISTENERS=PLAINTEXT://0.0.0.0:9092
+      - KAFKA_BROKER_ID=1
+      - KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR=1
+    ports:
+      - "9092:9092"
+    volumes:
+      - kafka_data:/kafka
+
+networks:
+  kafka-chat-network:
+
+volumes:
+  zookeeper_data:
+  kafka_data:
