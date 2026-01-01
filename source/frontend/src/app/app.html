@@ -1,2 +1,9 @@
-<app-join-form/>
-<app-chat-room/>
+@if (!isJoined()) {
+  <app-join-form (joined)="handleJoin($event)" />
+} @else {
+  <app-chat-room
+    [username]="roomData()!.username"
+    [roomName]="roomData()!.roomName"
+  />
+}
+

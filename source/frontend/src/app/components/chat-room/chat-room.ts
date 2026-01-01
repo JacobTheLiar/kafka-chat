@@ -15,8 +15,8 @@ import {DatePipe} from '@angular/common';
 })
 export class ChatRoom implements OnInit{
 
-  protected readonly username = input.required<string>();
-  protected readonly roomName = input.required<string>();
+  readonly username = input.required<string>();
+  readonly roomName = input.required<string>();
 
   private readonly webSocketService = inject(ChatWebSocket);
 
