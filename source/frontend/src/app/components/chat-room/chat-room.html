@@ -1,1 +1,24 @@
-<p>chat-room works!</p>
+<div class="chat-room">
+  <h2>Room: {{ roomName() }}</h2>
+  <p>Logged as: {{ username() }}</p>
+
+  <div class="messages">
+    @for (message of messages(); track message.timestamp) {
+      <div class="message">
+        <strong>{{ message.username }}:</strong>
+        <span>{{ message.message }}</span>
+        <small>{{ message.timestamp  | date:'short'}}</small>
+      </div>
+    }
+  </div>
+
+  <div class="message-input">
+    <input
+      type="text"
+      placeholder="Type a message..."
+      [(ngModel)]="currentMessage"
+      (keyup.enter)="onSendMessageClickEvent()"
+    />
+    <button (click)="onSendMessageClickEvent()">Send</button>
+  </div>
+</div>
