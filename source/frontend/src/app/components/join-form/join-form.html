@@ -1,1 +1,17 @@
-<p>join-form works!</p>
+<div class="join-form">
+  <h2>Join Chat Room</h2>
+
+  <input
+    type="text"
+    placeholder="Username"
+    [(ngModel)]="username"
+  />
+
+  <input
+    type="text"
+    placeholder="Room Name"
+    [(ngModel)]="roomName"
+  />
+
+  <button (click)="onJoinClickEvent()">Join</button>
+</div>
