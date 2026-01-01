@@ -1,28 +1,6 @@
 spring:
   application:
     name: Kafka Chat
-
-  kafka:
-    consumer:
-      bootstrap-servers: localhost:9092
-      group-id: chat-group
-      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
-      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
-      properties:
-        spring:
-          json:
-            trusted:
-              packages: *
-      enable-auto-commit: true
-      auto-offset-reset: latest
-      max-poll-records: 50
-
-    producer:
-      bootstrap-servers: localhost:9092
-      key-serializer: org.apache.kafka.common.serialization.StringSerializer
-      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
-      acks: 1
-
   websocket:
     enabled: true
 
