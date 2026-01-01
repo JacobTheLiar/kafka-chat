@@ -1,8 +1,9 @@
-import {Component, inject, input, model, OnInit, signal} from '@angular/core';
+import {Component, inject, input, model, signal} from '@angular/core';
 import {ChatMessage} from '../../model/chat-message.model';
 import {ChatWebSocket} from '../../service/web-socket.service';
 import {FormsModule} from '@angular/forms';
 import {DatePipe} from '@angular/common';
+import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-chat-room',
@@ -13,7 +14,7 @@ import {DatePipe} from '@angular/common';
   templateUrl: './chat-room.html',
   styleUrl: './chat-room.scss',
 })
-export class ChatRoom implements OnInit{
+export class ChatRoom{
 
   readonly username = input.required<string>();
   readonly roomName = input.required<string>();
@@ -23,8 +24,10 @@ export class ChatRoom implements OnInit{
   protected messages = signal<ChatMessage[]>([]);
   protected currentMessage = model('');
 
-  ngOnInit() {
-    this.webSocketService.messages$.subscribe(message => {
+  constructor() {
+    this.webSocketService.messages$
+      .pipe(takeUntilDestroyed())
+      .subscribe(message => {
       this.messages.update(messages => [...messages, message]);
     });
   }
