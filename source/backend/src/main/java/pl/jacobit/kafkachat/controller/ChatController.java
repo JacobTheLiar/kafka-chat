@@ -10,6 +10,8 @@ import pl.jacobit.kafkachat.service.KafkaProducerService;
 
 import java.time.Instant;
 
+import static pl.jacobit.kafkachat.config.WebSocketConstants.MAPPING_CHAT_SEND;
+
 @Controller
 @RequiredArgsConstructor
 @Slf4j
@@ -18,7 +20,7 @@ public class ChatController {
     private final KafkaProducerService kafkaProducerService;
 
 
-    @MessageMapping("/chat.send")
+    @MessageMapping(MAPPING_CHAT_SEND)
     public void sendMessage(SentMessageRequest request) {
         log.info("Got message to Kafka - Room: {}, User: {}, Message: {}", request.roomName(), request.username(), request.message());
         kafkaProducerService.sendMessage(
