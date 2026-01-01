@@ -8,7 +8,7 @@ import SockJS from 'sockjs-client';
 @Injectable({
   providedIn: 'root',
 })
-export class WebSocket {
+export class ChatWebSocket {
 
   private stompClient?: Client
 
