@@ -6,6 +6,7 @@ import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
+import pl.jacobit.kafkachat.config.KafkaConstants;
 import pl.jacobit.kafkachat.model.ChatMessage;
 
 @Service
@@ -15,7 +16,7 @@ public class KafkaConsumerService {
 
     private final SimpMessagingTemplate messagingTemplate;
 
-    @KafkaListener(topics = "chat-messages", groupId = "chat-group")
+    @KafkaListener(topics = KafkaConstants.TOPIC_CHAT_MESSAGES, groupId = KafkaConstants.GROUP_ID_CHAT)
     public void consumeMessage(ConsumerRecord<String, ChatMessage> consumedRecord) {
         var roomName = consumedRecord.key();
         var message = consumedRecord.value();
